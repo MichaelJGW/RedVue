@@ -5,7 +5,7 @@ interface IState {
   counter: number
 }
 
-interface IComputed {
+interface ISelectors {
   double (state:any): number,
   half (state:any): number
 }
@@ -21,12 +21,13 @@ interface IActions {
 interface IEffects {
   someAsyncAction: IEffect<number>
 }
-const store:ISlice <IState, IComputed, IReducers, IEffects> =  {
+
+const store:ISlice <IState, ISelectors, IReducers, IEffects> =  {
   slice: 'cart',
   initialState: {
     counter: 0
   },
-  computed: {
+  selectors: {
     double: createSelector( ['cart.counter'], (counter:number) => counter * 2),
     half: createSelector( ['cart.counter'], (counter:number) => counter / 2 )
   },
@@ -43,6 +44,6 @@ const store:ISlice <IState, IComputed, IReducers, IEffects> =  {
 }
 
 export const slice = createSlice({slice: store.slice, initialState: store.initialState, reducers: <any> store.reducers})
-export const computed = store.computed as IComputed
+export const selectors = store.selectors as ISelectors
 export const actions = slice.actions as any as IActions // Fix me
 export const effects = store.effects as IEffects

@@ -1,11 +1,11 @@
 import store from './store/store'
-import {actions, computed, effects} from './store/features/cart'
+import {actions, selectors, effects} from './store/features/cart'
 
 store.subscribe(() => {
   const state = store.getState();
   console.log(state)
-  console.log(computed.double(state))
-  console.log(computed.half(state))
+  console.log(selectors.double(state))
+  console.log(selectors.half(state))
 })
 
 effects.someAsyncAction(store.dispatch, 50000)

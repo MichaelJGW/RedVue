@@ -1,8 +1,8 @@
-export interface ISlice <S, C, R, E> {
+export interface ISlice <S, Se, R, E> {
   slice: string
   reducer?: Object
   initialState?: S
-  computed: C
+  selectors: Se
   reducers: R
   effects: E
 }
