@@ -19,11 +19,11 @@ const selectors = {
   double: createSelector( ['cart.counter'], (counter:number) => counter * 2),
   half: createSelector( ['cart.counter'], (counter:number) => counter / 2 )
 }
-    const reducers = {
-      addCounter(state:IState, payload:IActionPayload<number>):void {
-        state.counter += payload.payload;
-      }
-    }
+const reducers = {
+  addCounter(state:IState, payload:IActionPayload<number>):void {
+    state.counter += payload.payload;
+  }
+}
 const effects = {
   someAsyncAction (dispatch, payload:number):void {
     dispatch(store.actions.addCounter())
