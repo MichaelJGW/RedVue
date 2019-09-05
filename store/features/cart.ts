@@ -1,49 +1,30 @@
-import { createSlice, createSelector } from 'redux-starter-kit'
-import { ISlice, IEffect, IReducer, IAction } from '../IStore'
+import { createSelector } from 'redux-starter-kit'
+import { createSlice, IActionPayload } from '../reduex'
 
-interface IState {
-  counter: number
+type IState = typeof initialState
+type ISelectors = typeof selectors
+type IReducers = typeof reducers
+type IEffects = typeof effects
+
+const slice = 'cart'
+
+const initialState = {
+  counter: 0
 }
-
-interface ISelectors {
-  double (state:any): number,
-  half (state:any): number
+const selectors = {
+  double: createSelector( ['cart'], (counter:number) => counter * 2),
+  half: createSelector( ['cart'], (counter:number) => counter / 2 )
 }
-
-interface IReducers {
-  addCounter: IReducer<IState, number>
+const reducers = {
+  addCounter(state:IState, payload:IActionPayload<number>):void {
+    state.counter += payload.payload;
+  }
 }
-
-interface IActions {
-  addCounter: IAction<number>
-}
-
-interface IEffects {
-  someAsyncAction: IEffect<number>
-}
-
-const store:ISlice <IState, ISelectors, IReducers, IEffects> =  {
-  slice: 'cart',
-  initialState: {
-    counter: 0
-  },
-  selectors: {
-    double: createSelector( ['cart.counter'], (counter:number) => counter * 2),
-    half: createSelector( ['cart.counter'], (counter:number) => counter / 2 )
-  },
-  reducers: {
-    addCounter(state, payload) {
-      state.counter += payload.payload;
-    }
-  },
-  effects: {
-    someAsyncAction (dispatch, someValue) {
-      setTimeout(() => dispatch(actions.addCounter(someValue)), 2000)
-    }
+const effects = {
+  someAsyncAction (dispatch, payload:number):void {
+    dispatch(store.actions.addCounter())
+    setTimeout(() => dispatch(store.actions.addCounter(payload)), 2000)
   }
 }
 
-export const slice = createSlice({slice: store.slice, initialState: store.initialState, reducers: <any> store.reducers})
-export const selectors = store.selectors as ISelectors
-export const actions = slice.actions as any as IActions // Fix me
-export const effects = store.effects as IEffects
+export const store = createSlice <IState, ISelectors, IReducers, IEffects> ({slice, initialState, selectors, reducers, effects})
