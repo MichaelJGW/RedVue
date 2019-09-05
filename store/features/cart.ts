@@ -6,10 +6,6 @@ type ISelectors = typeof selectors
 type IReducers = typeof reducers
 type IEffects = typeof effects
 
-interface Anything {
-  [key: string]: any;
-}
-
 const slice = 'cart'
 
 const initialState = {
