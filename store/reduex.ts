@@ -14,7 +14,6 @@ export interface IActionPayload <T> {
 
 export function createSlice <S, Se, R, E>(options:IReduexOptions<S, Se, R, E>) {
   const slice = createKitSlice({slice: options.slice, initialState: options.initialState, reducers: <any> options.reducers})
-
   return {
     slice,
     selectors : options.selectors as Se,
