@@ -12,6 +12,7 @@ store.subscribe(() => {
 cart.effects.someAsyncAction(store.dispatch, 50000)
 
 setTimeout(() => {
+  cart.actions.addCounter(2)
   store.dispatch(cart.actions.addCounter(3))
 })
 
