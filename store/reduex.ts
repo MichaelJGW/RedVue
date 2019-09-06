@@ -1,5 +1,5 @@
-import { createSlice as createKitSlice } from 'redux-starter-kit'
-
+import { createSelector, createSlice as createKitSlice } from 'redux-starter-kit'
+export {createSelector}
 export type IReduexOptions <S, Se, R, E> = {
   slice: string
   initialState: S
@@ -20,10 +20,9 @@ export type ReducersToActions<R extends IReduces> = { [K in keyof R]: ReducerToA
 
 export function createSlice <S, Se, R extends IReduces, E>(options:IReduexOptions<S, Se, R, E>) {
   const slice = createKitSlice({slice: options.slice, initialState: options.initialState, reducers: <any> options.reducers})
-  
   return {
     slice,
-    selectors : options.selectors as Se,
+    selectors: options.selectors as Se,
     actions : slice.actions as any as ReducersToActions<R>,
     effects : options.effects as E
   }
