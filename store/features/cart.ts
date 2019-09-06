@@ -1,27 +1,27 @@
 import { createSlice, IActionPayload, createSelector } from '../reduex'
 
-type IState = typeof initialState
+type IState = typeof state
 
-const slice = 'cart'
+const name = 'cart'
 
-const initialState = {
+const state = {
   counter: 0
 }
-export const selectors = {
-  double: createSelector(['cart.counter'], (counter:number) => counter * 2),
-  half: createSelector(['cart.counter'], (counter:number) => counter / 2 )
+const getters = {
+  double: (state: IState):number => state.counter * 2,
+  half: (state: IState):number => state.counter / 2
 }
-const reducers = {
+const mutations = {
   addCounter(state: IState, payload:IActionPayload<number>):void {
     state.counter += payload.payload;
   }
 }
-export const effects = {
-  someAsyncAction (dispatch, payload:number):void {
-    dispatch(store.actions.addCounter(3))
-    setTimeout(() => dispatch(store.actions.addCounter(payload)), 2000)
+export const actions = {
+  someAsyncAction (payload:number):void {
+    commit.addCounter(3)
+    setTimeout(() => commit.addCounter(payload), 2000)
   }
 }
 
-export const store = createSlice <IState, typeof selectors, typeof reducers, typeof effects> ({slice, initialState, selectors, reducers, effects})
-export const {actions} = store
+export const store = createSlice <IState, typeof getters, typeof mutations, typeof actions> ({name, state, getters, mutations, actions})
+export const {commit} = store

@@ -1,25 +1,26 @@
 import store from './store/store'
 import {store as cart} from './store/features/cart'
 
-cart.effects.someAsyncAction(store.dispatch, 20)
+cart.action.someAsyncAction(20)
 store.subscribe(() => {
   const state = store.getState();
-  console.log(state)
-  console.log(cart.selectors.double(state))
-  console.log(cart.selectors.half(state))
+  console.log(state.cart.counter, state.cart.double, state.cart.half)
 })
 
-cart.effects.someAsyncAction(store.dispatch, 50000)
+cart.action.someAsyncAction(50000)
 
 setTimeout(() => {
-  cart.actions.addCounter(2)
-  store.dispatch(cart.actions.addCounter(3))
+  cart.commit.addCounter(3)
 })
 
 setTimeout(() => {
-  store.dispatch(cart.actions.addCounter(20))
+  cart.commit.addCounter(20)
 }, 1000)
 
 setTimeout(() => {
-  store.dispatch(cart.actions.addCounter(1))
+  cart.commit.addCounter(1)
 }, 3000)
+
+for (let index = 0; index < 1000000; index++) {
+  cart.commit.addCounter(1);
+}
