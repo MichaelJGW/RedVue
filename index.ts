@@ -1,23 +1,33 @@
-import store from './store/store'
-import {actions, selectors, effects} from './store/features/cart'
+import {store, rootState} from './store/store'
+import cart from './store/features/cart'
 
+cart.action.someAsyncAction(20)
 store.subscribe(() => {
-  const state = store.getState();
+  const state = store.getState() as rootState;
   console.log(state)
-  console.log(selectors.double(state))
-  console.log(selectors.half(state))
+  console.log(state.cart.counter, state.cart.double, state.cart.half)
 })
 
-effects.someAsyncAction(store.dispatch, 50000)
+cart.action.someAsyncAction(50000)
 
 setTimeout(() => {
-  store.dispatch(actions.addCounter(3))
+  cart.commit.addCounter(3)
 })
 
 setTimeout(() => {
-  store.dispatch(actions.addCounter(20))
+  cart.commit.addCounter(20)
 }, 1000)
 
 setTimeout(() => {
-  store.dispatch(actions.addCounter(1))
+  cart.commit.addCounter(1)
 }, 3000)
+
+// Speed Test
+let speedTestAmount = 10000;
+speedTestAmount = 0;
+console.time()
+for (let index = 0; index < speedTestAmount; index++) {
+  cart.commit.addCounter(1);
+}
+console.timeEnd()
+console.log(`for ${speedTestAmount} tasks fired`)

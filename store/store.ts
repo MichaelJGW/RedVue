@@ -1,14 +1,9 @@
-import { configureStore, ActionCreator, Action } from 'redux-starter-kit'
-import { ThunkAction } from 'redux-thunk'
+import RedVue from './RedVue'
+import slices, { rootState } from './slices'
 
-import rootReducer, { RootState } from './rootReducer'
-
-const store = configureStore({
-  reducer: rootReducer
+export const store = RedVue.configureStore({
+  reducer: slices
 })
 
-export type AppDispatch = typeof store.dispatch
-
-export type AppThunk = ActionCreator<ThunkAction<void, RootState, null, Action<string>>>
-
+export type rootState = rootState
 export default store
