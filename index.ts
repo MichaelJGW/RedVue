@@ -1,13 +1,10 @@
-import store from './store/store'
-import {RootState} from './store/rootReducer'
+import {store, RootState} from './store/store'
 import cart from './store/features/cart'
 
 // cart.action.someAsyncAction(20)
 store.subscribe(() => {
-  const state = store.getState();
-  const state2 = store.getState() as RootState;
+  const state = store.getState() as RootState;
   console.log(state)
-  state2.cart
   console.log(state.cart.counter, state.cart.double, state.cart.half)
 })
 
