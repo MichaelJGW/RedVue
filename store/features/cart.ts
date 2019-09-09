@@ -1,6 +1,6 @@
-import { createSlice } from '../reduex'
+import RedVue from '../RedVue'
 
-export default createSlice ({
+export default RedVue.createSlice ({
   name: 'cart',
   state: {
     counter: 10,
@@ -14,7 +14,7 @@ export default createSlice ({
     changeName (state, payload:string) {
       state.name = payload;
     },
-    addCounter(state, payload:number) {
+    addCounter (state, payload:number) {
       state.counter += payload;
     }
   },

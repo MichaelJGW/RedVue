@@ -1,9 +1,9 @@
-import {configureStore} from './reduex'
-import rootReducer, { RootState } from './rootReducer'
+import RedVue from './RedVue'
+import slices, { rootState } from './slices'
 
-export const store = configureStore({
-  reducer: rootReducer
+export const store = RedVue.configureStore({
+  reducer: slices
 })
 
-export type RootState = RootState
+export type rootState = rootState
 export default store
