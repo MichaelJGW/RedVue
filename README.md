@@ -1,14 +1,3 @@
-# Reduex
-Redux in Vuex styling.
-
-# Setup and Run
-```
-npm i
-npm run start
-```
-
-# Blog post
-https://medium.com/@michaeljwarner9/redux-written-like-vuex-b5ad606aa0a7
 # RedVue
 RedVue is a state management system that is easy to use, setup, and supports TypeScript out of the box.
 
@@ -110,9 +99,9 @@ export default RedVue.createSlice ({
 ```
 
 #### State
-This is the slice of state.
+This is the initial value of the state.
 #### Getters
-These are functions that run ever time the state changes. This is to auto calculate something based on state. Use cases would be filtering a list based on state changes to the filter flags. You just change the flag and the list automaticly filter the request.
+These are functions that run every time the state changes. This is to auto calculate something based on state. Use cases would be filtering a list based on state changes to the filter flags. You just change the flag and the list automaticly filter the request.
 #### Mutations
 These are functions that change state.
 #### Actions
