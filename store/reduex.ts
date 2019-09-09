@@ -77,7 +77,6 @@ export function createSlice <S, G, M, A>(options:IReduexOptions<S, G, M, A>) {
   return {
     slice,
     commit : commits as omitFirstParameters<M>,
-    action : actions as omitFirstParameters<A>,
-    initState: updateGetters(options.state, options.getters) as union<S, typeof options.getters>
+    action : actions as omitFirstParameters<A>
   }
 }
