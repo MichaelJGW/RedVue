@@ -1,4 +1,4 @@
-import RedVue from './RedVue'
+import RedVue from '../RedVue'
 import slices, { rootState } from './slices'
 
 export const store = RedVue.configureStore({

@@ -14,8 +14,8 @@
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "ts-node index.ts",
-    "dev": "ts-node-dev --respawn index.ts"
+    "start": "ts-node ./example/index.ts",
+    "dev": "ts-node-dev --respawn ./example/index.ts"
   },
   "author": "",
   "license": "ISC"

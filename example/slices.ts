@@ -1,4 +1,4 @@
-import RedVue from './RedVue';
+import RedVue from '../RedVue';
 import cart from './features/cart'
 
 const slices = RedVue.combineSlices({

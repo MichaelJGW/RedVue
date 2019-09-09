@@ -1,4 +1,4 @@
-import RedVue from '../RedVue'
+import RedVue from '../../RedVue'
 
 export default RedVue.createSlice ({
   name: 'cart',
