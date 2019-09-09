@@ -78,7 +78,7 @@ cart.commit.addCounter(1)
 ```
 
 # API
-##Slice
+## Slice
 
 ```js
 
@@ -109,13 +109,13 @@ export default RedVue.createSlice ({
 
 ```
 
-####State
+#### State
 This is the slice of state.
-####Getters
+#### Getters
 These are functions that run ever time the state changes. This is to auto calculate something based on state. Use cases would be filtering a list based on state changes to the filter flags. You just change the flag and the list automaticly filter the request.
-####Mutations
+#### Mutations
 These are functions that change state.
-####Actions
+#### Actions
 These are just functions that can dispatch mutations at any time to handle async tasks like fetching an API.
 
 # Repo
