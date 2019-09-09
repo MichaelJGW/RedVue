@@ -1,7 +1,6 @@
-import { createSlice, IActionPayload, createSelector } from '../reduex'
+import { createSlice } from '../reduex'
 
-
-const store = {
+export default createSlice ({
   name: 'cart',
   state: {
     counter: 10,
@@ -9,19 +8,19 @@ const store = {
   },
   getters: {
     double: (state):number => state.counter * 2,
-    half: (state):number => state.counter / 2
+    half: (state):number => state.counter / 2,
   },
   mutations: {
-    addCounter(state, payload:IActionPayload<number>):void {
-      state.counter += payload.payload;
+    changeName (state, payload:string) {
+      state.name = payload;
+    },
+    addCounter(state, payload:number) {
+      state.counter += payload;
     }
   },
   actions: {
-    someAsyncAction (payload:number):void {
-      commit.addCounter(3)
-      setTimeout(() => commit.addCounter(payload), 2000)
+    someAsyncAction (context, payload:number) {
+      setTimeout(() => context.addCounter(payload), 2000)
     }
   }
-}
-
-export const {commit, slice, action} = createSlice <typeof store.state, typeof store.getters, typeof store.mutations, typeof store.actions> (store)
+})

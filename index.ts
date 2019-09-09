@@ -1,31 +1,36 @@
 import store from './store/store'
-import {action, commit} from './store/features/cart'
+import {RootState} from './store/rootReducer'
+import cart from './store/features/cart'
 
-action.someAsyncAction(20)
+// cart.action.someAsyncAction(20)
 store.subscribe(() => {
   const state = store.getState();
+  const state2 = store.getState() as RootState;
+  console.log(state)
+  state2.cart
   console.log(state.cart.counter, state.cart.double, state.cart.half)
 })
 
-action.someAsyncAction(50000)
+// cart.action.someAsyncAction(50000)
 
 setTimeout(() => {
-  commit.addCounter(3)
+  cart.commit.addCounter(3)
 })
 
 setTimeout(() => {
-  commit.addCounter(20)
+  cart.commit.addCounter(20)
 }, 1000)
 
 setTimeout(() => {
-  commit.addCounter(1)
+  cart.commit.addCounter(1)
 }, 3000)
 
 // Speed Test
-const speedTestAmount = 10000;
+let speedTestAmount = 10000;
+speedTestAmount = 0;
 console.time()
 for (let index = 0; index < speedTestAmount; index++) {
-  commit.addCounter(1);
+  cart.commit.addCounter(1);
 }
 console.timeEnd()
 console.log(`for ${speedTestAmount} tasks fired`)
