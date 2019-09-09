@@ -1,8 +1,8 @@
 import { combineReducers } from 'redux-starter-kit'
-import {store} from './features/cart'
+import {slice as cart} from './features/cart'
 
 const rootReducer = combineReducers({
-  cart: store.slice.reducer
+  cart: cart.reducer
 })
 
 export type RootState = ReturnType<typeof rootReducer>

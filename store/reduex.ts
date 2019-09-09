@@ -1,4 +1,4 @@
-import { createSelector, createSlice as createKitSlice } from 'redux-starter-kit'
+import { configureStore as configureReduxStore, createSelector, createSlice as createKitSlice } from 'redux-starter-kit'
 export {createSelector}
 import store from './store'
 export type union<T, U> = T & U
@@ -19,10 +19,15 @@ function updateGetters (state:{}, getters:any):{} {
   Object.keys(getters).forEach(key => state[key] = getters[key](state))
   return state
 }
+
 let dispatch = (action:any) => {}
-export function registerStore(store) {
+
+export function configureStore(config) {
+  const store = configureReduxStore(config)
   dispatch = store.dispatch;
+  return store
 }
+
 export type IReduexOptions <S, G, R, E> = {
   name: string
   state: S
@@ -45,7 +50,6 @@ export function createSlice <S, G, R extends IReduces, E>(options:IReduexOptions
   Object.keys(slice.actions).forEach(key => {
     const action = slice.actions[key];
     commits[key] = function (payload) {
-      // console.log('payload', payload, action(payload))
       dispatch(action(payload))
       return action(payload)
     }
