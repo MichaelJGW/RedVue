@@ -1,5 +1,6 @@
 import {store, rootState} from './store'
 import cart from './features/cart'
+import products from './features/products'
 
 
 const unsubscribe = store.subscribe(() => {
@@ -8,7 +9,7 @@ const unsubscribe = store.subscribe(() => {
   console.log(state.cart.counter, state.cart.double, state.cart.half)
 })
 
-
+products.action.fetchProducts(null)
 cart.action.someAsyncAction(50000)
 cart.commit.addCounter(3)
 cart.commit.addCounter(20)

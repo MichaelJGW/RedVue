@@ -18,6 +18,7 @@ export type creatSliceOptions <S, G, M, A> = {
 // Remove the first parameter with the second
 export type omitFirstParameter<T> = T extends (...args: infer A) => any ? (payload:A[1]) => any : never
 export type omitFirstParameters<T> = { [K in keyof T]: omitFirstParameter<T[K]> }
+export type returnTypes<T> = T extends { [key:string]: (...args) => any} ? { [K in keyof T]: ReturnType<T[K]> } : never 
 
 class RedVue {
   private dispatch = (action:any) => {}
@@ -52,8 +53,7 @@ class RedVue {
     // REGISTER
     const slice = createKitSlice({
       slice: options.name,
-      // initialState: updateGetters(options.state, options.getters) as union< GettersToValues<IReduexOptions<S>['mutations'], S>, S>,
-      initialState: this.updateGetters(options.state, options.getters) as union<S, typeof options.getters>,
+      initialState: this.updateGetters(options.state, options.getters) as union<S, returnTypes<typeof options.getters>>,
       reducers: <any> reducers
     })
   
