@@ -1,6 +1,6 @@
-import RedVue from '../RedVue';
+import {combineSlices} from '../RedVue';
 import {cart} from './features/cart'
 
-export default RedVue.combineSlices({
+export default combineSlices({
   cart: cart.slice.reducer
 })

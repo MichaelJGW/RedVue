@@ -3,7 +3,7 @@ import {cart} from './features/cart'
 
 
 const unsubscribe = store.subscribe(() => {
-  const state = store.getState() as rootState;
+  const state = store.getState() as rootState
   console.log(state.cart.counter, state.cart.double, state.cart.half)
 })
 

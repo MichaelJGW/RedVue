@@ -1,5 +1,5 @@
-import RedVue from '../RedVue'
+import {configureStore} from '../RedVue'
 import slices from './slices'
 
-export const store = RedVue.configureStore({ slices })
+export const store = configureStore({ slices })
 export type rootState = ReturnType<typeof slices>

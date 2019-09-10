@@ -1,6 +1,6 @@
-import RedVue from '../../RedVue'
+import {createSlice} from '../../RedVue'
 
-export const cart = RedVue.createSlice ({
+export const cart = createSlice ({
   name: 'cart',
   state: {
     counter: 10,
