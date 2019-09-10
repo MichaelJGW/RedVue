@@ -2,7 +2,7 @@ import { configureStore as configureReduxStore, createSelector, createSlice as c
 
 // Util Types
 type union<T, U> = T & U
-type omitFirstParameter<T> = T extends (...args: infer A) => any ? (payload:A[1]) => any : never
+type omitFirstParameter<T> = T extends (...args: infer A) => any ? (payload?:A[1]) => any : never
 type omitFirstParameters<T> = { [K in keyof T]: omitFirstParameter<T[K]> }
 type returnTypes<T> = T extends { [key:string]: (...args) => any} ? { [K in keyof T]: ReturnType<T[K]> } : never
 

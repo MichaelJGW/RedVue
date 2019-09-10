@@ -4,7 +4,7 @@ import {cart} from './features/cart'
 
 const unsubscribe = store.subscribe(() => {
   const state = store.getState() as rootState
-  console.log(state.cart.counter, state.cart.double, state.cart.half)
+  console.log(state.counter.count, state.cart.counter, state.cart.double, state.cart.half)
 })
 
 cart.action.someAsyncAction(50000)
