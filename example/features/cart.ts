@@ -1,6 +1,6 @@
 import RedVue from '../../RedVue'
 
-export default RedVue.createSlice ({
+export const cart = RedVue.createSlice ({
   name: 'cart',
   state: {
     counter: 10,
@@ -19,8 +19,8 @@ export default RedVue.createSlice ({
     }
   },
   actions: {
-    someAsyncAction (context, payload:number) {
-      setTimeout(() => context.addCounter(payload), 2000)
+    someAsyncAction (payload:number) {
+      setTimeout(() => cart.commit.addCounter(payload), 2000)
     }
   }
 })

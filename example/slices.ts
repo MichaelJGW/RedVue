@@ -1,5 +1,5 @@
 import RedVue from '../RedVue';
-import cart from './features/cart'
+import {cart} from './features/cart'
 
 const slices = RedVue.combineSlices({
   cart: cart.slice.reducer

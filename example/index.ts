@@ -1,5 +1,5 @@
 import {store, rootState} from './store'
-import cart from './features/cart'
+import {cart} from './features/cart'
 
 
 const unsubscribe = store.subscribe(() => {

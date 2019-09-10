@@ -10,13 +10,13 @@ type returnTypes<T> = T extends { [key:string]: (...args) => any} ? { [K in keyo
 type state = object
 type getters<S> = { [key:string]: (state:S) => any }
 type mutations<S> = { [key:string]: (state:S, payload:any) => void }
-type actions<C> = { [key:string]: (context:C, payload:any) => void }
+type actions = { [key:string]: (payload:any) => void }
 type creatSliceOptions <S, G, M, A> = {
   name: string
   state: S & state
   getters: G & getters<S>
   mutations: M & mutations<S>
-  actions: A & actions<any>
+  actions: A & actions
 }
 
 class RedVue {
@@ -79,7 +79,7 @@ class RedVue {
     return {
       slice,
       commit : commits as omitFirstParameters<M>,
-      action : actions as omitFirstParameters<A>
+      action : actions as A
     }
   }
 }
