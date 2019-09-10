@@ -9,8 +9,8 @@ type returnTypes<T> = T extends { [key:string]: (...args) => any} ? { [K in keyo
 // RedVue Types
 type state = object
 type getters<S> = { [key:string]: (state:S) => any }
-type mutations<S> = { [key:string]: (state:S, payload:any) => any }
-type actions<C> = { [key:string]: (context:C, payload:any) => any }
+type mutations<S> = { [key:string]: (state:S, payload:any) => void }
+type actions<C> = { [key:string]: (context:C, payload:any) => void }
 type creatSliceOptions <S, G, M, A> = {
   name: string
   state: S & state
@@ -20,7 +20,8 @@ type creatSliceOptions <S, G, M, A> = {
 }
 
 class RedVue {
-  private dispatch = (action:any) => {}
+
+  // Utils
   private map (obj:object, fn:Function) {
     const newObj = {}
     Object.keys(obj).forEach(key => {
@@ -32,8 +33,15 @@ class RedVue {
     Object.keys(getters).forEach(key => state[key] = getters[key](state))
     return state
   }
+
+  // to hold onto the dispatch for auto dispatching
+  private dispatch = (action:any) => {}
+
+  // For single import
   public createSelector = createSelector
   public combineSlices = combineReducers
+
+  // Functions
   public configureStore (config) {
     const store = configureReduxStore({
       reducer: config.slices,
