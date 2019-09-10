@@ -35,7 +35,10 @@ class RedVue {
   public createSelector = createSelector
   public combineSlices = combineReducers
   public configureStore (config) {
-    const store = configureReduxStore(config)
+    const store = configureReduxStore({
+      reducer: config.slices,
+      ...config
+    })
     this.dispatch = store.dispatch;
     return store
   }
