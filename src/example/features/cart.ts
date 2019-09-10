@@ -20,8 +20,7 @@ export const cart = RedVue.createSlice ({
   },
   actions: {
     someAsyncAction (payload:number) {
-      console.log('running action payload', payload)
-      setTimeout(() => cart.commit.addCounter(payload), 2000)
+      setTimeout(() => cart.commit.addCounter(payload), 500)
     }
   }
 })
