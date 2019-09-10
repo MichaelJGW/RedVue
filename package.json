@@ -1,7 +1,7 @@
 {
-  "name": "reduex",
+  "name": "redvue",
   "version": "1.0.0",
-  "description": "",
+  "description": "State management made easy",
   "main": "index.ts",
   "dependencies": {
     "redux-starter-kit": "^0.6.3",
@@ -14,9 +14,9 @@
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "ts-node ./example/index.ts",
-    "dev": "ts-node-dev --respawn ./example/index.ts"
+    "start": "ts-node ./src/example/index.ts",
+    "dev": "ts-node-dev --respawn ./src/example/index.ts"
   },
-  "author": "",
-  "license": "ISC"
+  "author": "Michael Warner",
+  "license": "MIT"
 }

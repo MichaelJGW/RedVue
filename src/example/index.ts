@@ -8,11 +8,11 @@ const unsubscribe = store.subscribe(() => {
   console.log(state.cart.counter, state.cart.double, state.cart.half)
 })
 
-cart.action.someAsyncAction(50000)
 cart.commit.addCounter(3)
 cart.commit.addCounter(20)
 cart.commit.addCounter(1)
-cart.action.someAsyncAction(20)
+cart.action.someAsyncAction(50000)
+// cart.action.someAsyncAction(20)
 
 unsubscribe()
 

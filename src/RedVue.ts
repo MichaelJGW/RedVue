@@ -75,7 +75,7 @@ class RedVue {
       return action(payload)
     })
     // change actions to have the context
-    const actions = this.map(options.actions, (action) => (payload) => action(commits, payload))
+    const actions = this.map(options.actions, (action) => (payload) => action(payload))
     return {
       slice,
       commit : commits as omitFirstParameters<M>,

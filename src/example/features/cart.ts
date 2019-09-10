@@ -4,7 +4,7 @@ export const cart = RedVue.createSlice ({
   name: 'cart',
   state: {
     counter: 10,
-    name: 'adsf'
+    name: 'bob'
   },
   getters: {
     double: (state):number => state.counter * 2,
@@ -20,6 +20,7 @@ export const cart = RedVue.createSlice ({
   },
   actions: {
     someAsyncAction (payload:number) {
+      console.log('running action payload', payload)
       setTimeout(() => cart.commit.addCounter(payload), 2000)
     }
   }
