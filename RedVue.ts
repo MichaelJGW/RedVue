@@ -1,24 +1,23 @@
 import { configureStore as configureReduxStore, createSelector, createSlice as createKitSlice, combineReducers } from 'redux-starter-kit'
 
-export type union<T, U> = T & U
+// Util Types
+type union<T, U> = T & U
+type omitFirstParameter<T> = T extends (...args: infer A) => any ? (payload:A[1]) => any : never
+type omitFirstParameters<T> = { [K in keyof T]: omitFirstParameter<T[K]> }
+type returnTypes<T> = T extends { [key:string]: (...args) => any} ? { [K in keyof T]: ReturnType<T[K]> } : never
 
-export type state = object
-export type getters<S> = { [key:string]: (state:S) => any }
-export type mutations<S> = { [key:string]: (state:S, payload:any) => any }
-export type actions<C> = { [key:string]: (context:C, payload:any) => any }
-
-export type creatSliceOptions <S, G, M, A> = {
+// RedVue Types
+type state = object
+type getters<S> = { [key:string]: (state:S) => any }
+type mutations<S> = { [key:string]: (state:S, payload:any) => any }
+type actions<C> = { [key:string]: (context:C, payload:any) => any }
+type creatSliceOptions <S, G, M, A> = {
   name: string
   state: S & state
   getters: G & getters<S>
   mutations: M & mutations<S>
   actions: A & actions<any>
 }
-
-// Remove the first parameter with the second
-export type omitFirstParameter<T> = T extends (...args: infer A) => any ? (payload:A[1]) => any : never
-export type omitFirstParameters<T> = { [K in keyof T]: omitFirstParameter<T[K]> }
-export type returnTypes<T> = T extends { [key:string]: (...args) => any} ? { [K in keyof T]: ReturnType<T[K]> } : never 
 
 class RedVue {
   private dispatch = (action:any) => {}
