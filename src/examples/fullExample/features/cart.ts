@@ -1,4 +1,4 @@
-import {createSlice} from '../../RedVue'
+import { createSlice } from 'RedVue'
 import { counter } from './counter'
 
 export const cart = createSlice ({
@@ -22,8 +22,7 @@ export const cart = createSlice ({
   actions: {
     someAsyncAction (payload:number) {
       setTimeout(() => cart.commit.addCounter(payload), 500)
-      counter.action.addRandomAmountThenSet(100)
-      counter.commit.addOne(null);
+      counter.commit.addOne();
     }
   }
 })

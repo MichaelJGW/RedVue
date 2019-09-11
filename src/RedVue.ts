@@ -14,21 +14,21 @@ type actions = { [key:string]: (payload:any) => void }
 type creatSliceOptions <S, G, M, A> = {
   name: string
   state: S & state
-  getters: G & getters<S>
+  getters?: G & getters<S>
   mutations: M & mutations<S>
-  actions: A & actions
+  actions?: A & actions
 }
 
 
 // Utils
-function map (obj:object, fn:Function) {
+function map (obj:object={}, fn:Function) {
   const newObj = {}
   Object.keys(obj).forEach(key => {
     newObj[key] = fn(obj[key])
   })
   return newObj
 }
-function updateGetters (state:{}, getters:any):{} {
+function updateGetters (state:{}, getters:any={}):{} {
   Object.keys(getters).forEach(key => state[key] = getters[key](state))
   return state
 }

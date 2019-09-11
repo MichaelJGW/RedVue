@@ -1,4 +1,4 @@
-import {configureStore} from '../RedVue'
+import {configureStore} from 'RedVue'
 import slices from './slices'
 import middleware from './middleware'
 

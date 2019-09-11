@@ -10,12 +10,14 @@
     "typescript": "^3.6.2"
   },
   "devDependencies": {
-    "ts-node-dev": "^1.0.0-pre.42"
+    "ts-node-dev": "^1.0.0-pre.42",
+    "tsconfig-paths": "^3.8.0"
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "ts-node ./src/example/index.ts",
-    "dev": "ts-node-dev --respawn ./src/example/index.ts"
+    "start": "npm run full",
+    "full": "ts-node -r tsconfig-paths/register ./src/examples/fullExample/index.ts",
+    "simple": "ts-node -r tsconfig-paths/register ./src/examples/simpleExample/index.ts"
   },
   "author": "Michael Warner",
   "license": "MIT"

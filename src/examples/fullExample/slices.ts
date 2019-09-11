@@ -1,4 +1,4 @@
-import { combineSlices } from '../RedVue'
+import { combineSlices } from 'RedVue'
 import { counter } from './features/counter'
 import { cart } from './features/cart'
 import { logger } from './features/logger'
