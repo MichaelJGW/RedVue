@@ -1,4 +1,4 @@
-import { configureStore as configureReduxStore, createSelector, createSlice as createKitSlice, combineReducers } from 'redux-starter-kit'
+import { configureStore as configureReduxStore, createSelector, createSlice as createReduxSlice, combineReducers } from 'redux-starter-kit'
 
 // Util Types
 type union<T, U> = T & U
@@ -21,6 +21,7 @@ type creatSliceOptions <S, G, M, A> = {
 
 
 // Utils
+// -----MAP-----
 function map (obj:object={}, fn:Function) {
   const newObj = {}
   Object.keys(obj).forEach(key => {
@@ -28,15 +29,17 @@ function map (obj:object={}, fn:Function) {
   })
   return newObj
 }
+// -----UPDATE GETTERS-----
 function updateGetters (state:{}, getters:any={}):{} {
   Object.keys(getters).forEach(key => state[key] = getters[key](state))
   return state
 }
 
+// -----DISPATCH-----
 // to hold onto the dispatch for auto dispatching
 let dispatch = (action:any) => {}
 
-// Functions
+// -----CONFIGURE STORE-----
 export function configureStore (config) {
   const store = configureReduxStore({
     reducer: config.slices,
@@ -45,8 +48,10 @@ export function configureStore (config) {
   dispatch = store.dispatch;
   return store
 }
+
+// -----CREATE SLICE-----
 export function createSlice <S, G, M, A>(options:creatSliceOptions<S, G, M, A>) {
-  // BEFORE REGISTER
+  // before register
   // overwrite mutations into reducers
   const reducers = map(options.mutations, (reducer) => (state, payload) => {
     // Run the reducer
@@ -55,16 +60,15 @@ export function createSlice <S, G, M, A>(options:creatSliceOptions<S, G, M, A>) 
     state = updateGetters(state, options.getters)
   })
   
-  // REGISTER
-  const slice = createKitSlice({
+  // Register
+  const slice = createReduxSlice({
     slice: options.name,
     initialState: updateGetters(options.state, options.getters) as union<S, returnTypes<typeof options.getters>>,
     reducers: <any> reducers
   })
 
-  // AFTER REGISTER
+  // after register
   // set all mutations to auto dispatch
-  
   const commits = map(slice.actions, (action) => (payload) => {
     dispatch(action(payload))
     return action(payload)
@@ -78,5 +82,8 @@ export function createSlice <S, G, M, A>(options:creatSliceOptions<S, G, M, A>) 
   }
 }
 
+// -----ADDITIONAL EXPORTS-----
+// rename
 export const combineSlices = combineReducers
+// pass through
 export {createSelector}
