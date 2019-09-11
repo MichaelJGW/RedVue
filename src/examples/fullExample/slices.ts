@@ -4,7 +4,7 @@ import { cart } from './features/cart'
 import { logger } from './features/logger'
 
 export default combineSlices({
-  cart: cart.slice.reducer,
-  counter: counter.slice.reducer,
-  logger: logger.slice.reducer
+  cart: cart.register,
+  counter: counter.register,
+  logger: logger.register
 })

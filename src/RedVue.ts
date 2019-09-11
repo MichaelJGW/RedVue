@@ -18,6 +18,12 @@ type creatSliceOptions <S, G, M, A> = {
   mutations: M & mutations<S>
   actions?: A & actions
 }
+// RedVue middleware
+type middlewareAction = {
+  type: string,
+  payload: any
+}
+type middlewareFunction = (action:middlewareAction) => void;
 
 
 // Utils
@@ -64,7 +70,7 @@ export function createSlice <S, G, M, A>(options:creatSliceOptions<S, G, M, A>) 
   const slice = createReduxSlice({
     slice: options.name,
     initialState: updateGetters(options.state, options.getters) as union<S, returnTypes<typeof options.getters>>,
-    reducers: <any> reducers
+    reducers: <any> reducers,
   })
 
   // after register
@@ -77,9 +83,18 @@ export function createSlice <S, G, M, A>(options:creatSliceOptions<S, G, M, A>) 
   const actions = map(options.actions, (action) => (payload) => action(payload))
   return {
     slice,
+    register: slice.reducer,
     commit : commits as omitFirstParameters<M>,
     action : actions as A
   }
+}
+
+
+export function middleware (fn:middlewareFunction): Function {
+  return () => next => (action:middlewareAction) => {
+    fn(action);
+    next(action);
+  };
 }
 
 // -----ADDITIONAL EXPORTS-----

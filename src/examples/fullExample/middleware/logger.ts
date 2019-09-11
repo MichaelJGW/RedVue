@@ -1,10 +1,12 @@
-export const logger = store => next => action => {
+import { logger as loggerAction } from './../features/logger';
+import { middleware } from 'RedVue';
+
+export const logger = middleware((action) => {
     if (action.type !== 'logger/insertLog') {
-        store.dispatch({ type: 'logger/insertLog', payload: {
-            timestamp: Date.now(),
+        loggerAction.commit.insertLog({
+            timestamp: new Date(),
             action: action.type,
             payload: action.payload
-        }})
+        })
     }
-    next(action);
-};
+})
