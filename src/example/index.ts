@@ -1,13 +1,14 @@
 import {store, rootState} from './store'
 import {cart} from './features/cart'
 
-
+let currState = {}
 const unsubscribe = store.subscribe(() => {
   const state = store.getState() as rootState
   console.log(state.counter.count, state.cart.counter, state.cart.double, state.cart.half)
+  currState = state
 })
 
-cart.action.someAsyncAction(50000)
+// cart.action.someAsyncAction(50000)
 cart.commit.addCounter(3)
 cart.commit.addCounter(20)
 cart.commit.addCounter(1)
@@ -25,3 +26,5 @@ setTimeout (() => {
   console.timeEnd(timerName)
   console.log(`about ${(new Date().getTime() - startTime.getTime()) / speedTestAmount}ms for each commit`)
 }, 1000)
+
+console.log(currState)
