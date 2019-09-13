@@ -89,17 +89,10 @@ export function createSlice <S, G, M, A>(options:creatSliceOptions<S, G, M, A>) 
   }
 }
 
-
 export function middleware (fn:middlewareFunction): Function {
-  // We want middleware to not trigger itself so we see if it is still running if it is don't fire
-  let running = false;
   return () => next => (action:middlewareAction) => {
-    if (running === false) {
-      running = true;
-      fn(action);
-      next(action);
-      running = false;
-    }
+    fn(action);
+    next(action);
   };
 }
 
