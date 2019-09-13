@@ -4,17 +4,21 @@
   "description": "State management made easy",
   "main": "index.ts",
   "dependencies": {
+    "jest": "^24.9.0",
+    "npx": "^10.2.0",
     "redux-starter-kit": "^0.6.3",
     "ts-loader": "^6.0.4",
     "ts-node": "^8.3.0",
     "typescript": "^3.6.2"
   },
   "devDependencies": {
+    "@types/jest": "^24.0.18",
+    "ts-jest": "^24.1.0",
     "ts-node-dev": "^1.0.0-pre.42",
     "tsconfig-paths": "^3.8.0"
   },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "npx jest",
     "start": "npm run full",
     "full": "ts-node -r tsconfig-paths/register ./src/examples/fullExample/index.ts",
     "simple": "ts-node -r tsconfig-paths/register ./src/examples/simpleExample/index.ts"

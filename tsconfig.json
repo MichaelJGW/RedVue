@@ -5,7 +5,8 @@
         "removeComments": true,
         "preserveConstEnums": true,
         "sourceMap": true,
-        "baseUrl": "./src"
+        "baseUrl": "./src",
+        "lib": [ "esnext", "dom", "es5", "scriptHost" ]
     },
     "included": [
         "src/**/*"

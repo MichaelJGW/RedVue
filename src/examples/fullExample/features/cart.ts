@@ -4,7 +4,7 @@ import { counter } from './counter'
 export const cart = createSlice ({
   name: 'cart',
   state: {
-    counter: 10,
+    counter: 0,
     name: 'bob'
   },
   getters: {
