@@ -17,6 +17,15 @@ describe ('Cart', () => {
             expect(state.cart.counter).toBe(0)
         })
     })
+    describe('Getters', () => {
+        it('should be update double when counter changes', () => {
+            let state:rootState = store.getState()
+            expect(state.cart.double).toBe(0)
+            cart.commit.addCounter(10);
+            state = store.getState()
+            expect(state.cart.double).toBe(20)
+        })
+    })
     describe('Mutations', () => {
         it('should be able to add to the counter', () => {
             let state:rootState = store.getState()
