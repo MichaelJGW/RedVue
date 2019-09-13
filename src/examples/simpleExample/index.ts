@@ -9,7 +9,7 @@ const counter = createSlice ({
 
 // Setup Store
 const store = configureStore({ 
-    slices: combineSlices({ counter: counter.slice.reducer })
+    slices: combineSlices({ counter: counter.register })
 })
 
 // Usage

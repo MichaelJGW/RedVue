@@ -3,67 +3,32 @@ RedVue is a state management system that is easy to use, setup, and supports Typ
 
 ## About
 
-I have found the ease of use for Vuex to be the outstanding. I also like Redux as you can take it anywhere you go. So this is a mixure of the two Red~~ux~~ & Vue~~x~~ (RedVue). It is based on Redux but the ease of use through the style of Vuex.
+I have found favor in Vuex however it is limited to Vue applications. I also like Redux as you can take it anywhere. RedVue is a mixture of the two Red~~ux~~ & Vue~~x~~ `RedVue`. It is based on Vuex with the guts of Redux.
 
 
-## Usage
-
-### Create a Slice
-```js
-import RedVue from 'RedVue'
-
-export default RedVue.createSlice ({
-  name: 'cart',
-  state: {
-    counter: 10
-  },
-  mutations: {
-    addCounter (state, payload:number) {
-      state.counter += payload;
-    }
-  }
-})
-
-```
-
-### Combine all Slices together
+## Simple Example
 
 ```js
-import RedVue from 'RedVue';
-import cart from './cart'
-import someOtherSlice from './someOtherSlice'
+import {configureStore, createSlice, combineSlices} from 'RedVue'
 
-export default RedVue.combineSlices({
-  cart: cart.slice.reducer,
-  other: someOtherSlice.slice.reducer
+// Setup Slices
+const counter = createSlice ({
+    name: 'counter',
+    state: { count: 0 },
+    mutations: { addOne: (state) => state.count += 1 }
 })
 
-```
-
-### Create a Store
-```js
-import RedVue from 'RedVue'
-import slices from './slices'
-
-export const store = RedVue.configureStore({
-  reducer: slices
+// Setup Store
+const store = configureStore({ 
+    slices: combineSlices({ counter: counter.register })
 })
 
-export type rootState = rootState
-export default store
-```
-
-### Import and start using it
-
-```
-import {store} from './store'
-import cart from './cart'
-
+// Usage
 store.subscribe(() => {
-  console.log(store.getState())
+    console.log(store.getState())
 })
 
-cart.commit.addCounter(1)
+counter.commit.addOne()
 ```
 
 # API
@@ -71,27 +36,28 @@ cart.commit.addCounter(1)
 
 ```js
 
-export default RedVue.createSlice ({
-  name: 'cart',
-  state: {
-    counter: 10,
-    name: 'adsf'
+const myStore = createSlice ({
+  name: 'store', // Name of the slice
+  state: { // The initial state
+    products: [],
+    sortBy: 'price'
   },
-  getters: {
-    double: (state):number => state.counter * 2,
-    half: (state):number => state.counter / 2,
-  },
-  mutations: {
-    changeName (state, payload:string) {
-      state.name = payload;
-    },
-    addCounter (state, payload:number) {
-      state.counter += payload;
+  getters: { // State values that change when a mutation is fired.
+    filteredProducts (state) {
+      const key = state.sortBy
+      return state.products.sort((a,b) => a[key] - b[key])
     }
   },
-  actions: {
-    someAsyncAction (context, payload:number) {
-      setTimeout(() => context.addCounter(payload), 2000)
+  mutations: { // This is the only location changes to the state occur.
+    addProducts (state, payload) {
+      state.products = payload;
+    }
+  },
+  actions: { // This is where you can do async calls
+    getProducts () {
+      fetch('/api/getProducts/')
+      .then(res => res.json())
+      .then(products => myStore.commit.addProducts(products))
     }
   }
 })
@@ -101,13 +67,29 @@ export default RedVue.createSlice ({
 #### State
 This is the initial value of the state.
 #### Getters
-These are functions that run every time the state changes. This is to auto calculate something based on state. Use cases would be filtering a list based on state changes to the filter flags. You just change the flag and the list automaticly filter the request.
+In this case whenever any of the mutations fire
+for this slice the filteredProducts function is ran
+and a value call filteredProducts is appended to the
+state object with the returned value of this function.
+
+So all that needs to be done is change sortBy to name
+and the filteredProducts will auto calculate the filtered
+values to be sorted by name vs price.
 #### Mutations
 These are functions that change state.
+Unlike Redux you can mutate the state like Vuex
 #### Actions
 These are just functions that can dispatch mutations at any time to handle async tasks like fetching an API.
 
 # Repo
+
+# Examples
+
+In the Repo we have a Simple and a Full Example
+
+The Full Example has multiple slices, tests, middleware and so much more.
+
+Take a look at the code and see if it would work for your next project.
 
 # Setup and Run
 ```
