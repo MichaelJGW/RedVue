@@ -1,6 +1,6 @@
 {
   "name": "redvue",
-  "version": "1.0.2",
+  "version": "1.0.4",
   "description": "State management made easy",
   "main": "./dist/RedVue.js",
   "devDependencies": {
