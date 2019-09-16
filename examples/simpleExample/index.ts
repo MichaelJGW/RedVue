@@ -18,3 +18,5 @@ store.subscribe(() => {
 })
 
 counter.commit.addOne()
+
+

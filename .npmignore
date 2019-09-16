@@ -1,0 +1,6 @@
+.vscode/
+node_modules/
+src/
+examples/
+jest.config.js
+webpack.config.js

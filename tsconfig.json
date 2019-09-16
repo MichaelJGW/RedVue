@@ -1,17 +1,21 @@
 {
     "compilerOptions": {
         "module": "commonjs",
+        "target":"es5",
+        "outDir": "./dist/",
+        "declaration": true,
+        "sourceMap": true, 
         "noImplicitAny": false,
         "removeComments": true,
         "preserveConstEnums": true,
-        "sourceMap": true,
-        "baseUrl": "./src",
-        "lib": [ "esnext", "dom", "es5", "scriptHost" ]
+        "baseUrl": "./dist",
+        "lib": [ "esnext", "es5" ]
     },
     "included": [
         "src/**/*"
     ],
     "exclude": [
-        "node_modules"
+        "node_modules",
+        "examples"
     ]
 }

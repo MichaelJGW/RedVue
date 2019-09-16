@@ -13,7 +13,6 @@ export const logger = createSlice ({
   },
   mutations: {
     insertLog (state, payload:log) {
-      console.log('running insertLog')
       if (state.logging) {
         state.logs.push(payload);
       }
