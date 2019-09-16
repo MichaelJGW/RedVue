@@ -6,27 +6,7 @@ RedVue is a state management system that is easy to use, setup, and supports Typ
 ```bash
 npm i redvue
 ```
-###JS
-```js
-const RedVue = require('RedVue')
-// Setup Slices
-const counter = RedVue.createSlice ({
-    name: 'counter',
-    state: { count: 0 },
-    mutations: { addOne: (state) => state.count += 1 }
-})
-// Slices
-const slices = RedVue.combineSlices({
-  counter: counter.register
-})
-// Setup Store
-const store = RedVue.configureStore({ slices })
-// Usage
-console.log(store.getState()) // { counter: { count: 0 } }
-counter.commit.addOne()
-console.log(store.getState()) // { counter: { count: 1 } }
-```
-###JS
+
 ```js
 const RedVue = require('RedVue')
 // Setup Slices
@@ -56,10 +36,13 @@ I have found favor in Vuex however it is limited to Vue applications. I also lik
 ### Types are supported out of the box.
 #### Mutations
 Mutations already know the state by default.
+
 ![State Type Checking](https://i.ibb.co/3mF5xZV/Screen-Shot-2019-09-16-at-11-43-30-AM.png)
 #### Mutation Payloads
 If you add a type to a payload. It will automatically pass the type to the execution of the mutations.
+
 <B>This also works with actions!!!</B>
+
 ![Mutation Type Setup](https://i.ibb.co/bNXhzSK/Screen-Shot-2019-09-16-at-11-44-59-AM.png)
 ![Mutation Usage](https://i.ibb.co/w74BCJW/Screen-Shot-2019-09-16-at-11-44-50-AM.png)
 
@@ -68,7 +51,8 @@ When getting State outside of the slice the getters will automatically be added 
 `This is the only type checking where you will need to add code that is not directly related to your own. you will need to add the following where slices is the returned value of combineSlices.`
 ```ts
 type rootState = ReturnType<typeof slices>
-``` 
+```
+
 ![getters setup](https://i.ibb.co/Qcvr9Vc/Screen-Shot-2019-09-16-at-1-36-07-PM.png)
 ![state typed](https://i.ibb.co/t292Q3M/Screen-Shot-2019-09-16-at-1-37-10-PM.png)
 
