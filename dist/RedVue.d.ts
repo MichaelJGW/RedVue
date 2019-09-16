@@ -34,11 +34,22 @@ declare type middlewareFunction = (action: middlewareAction) => void;
 export declare function configureStore(config: any): import("redux-starter-kit").EnhancedStore<any, import("redux").AnyAction>;
 export declare function createSlice<S, G, M, A>(options: creatSliceOptions<S, G, M, A>): {
     slice: import("redux-starter-kit").Slice<union<S, returnTypes<G & getters<S>>>, {
-        [x: string]: import("redux-starter-kit").PayloadActionCreator<void, string, void> | import("redux-starter-kit").PayloadActionCreator<unknown, string, void> | ({
+        [x: string]: ({
             type: string;
-        } & ((...args: unknown[]) => import("redux-starter-kit").PayloadAction<unknown, string, unknown>)) | ({
+        } & (() => import("redux").Action<string> & {
+            payload: undefined;
+        })) | ({
             type: string;
-        } & ((...args: unknown[]) => import("redux-starter-kit").PayloadAction<unknown, string, void>));
+        } & void) | ({
+            type: string;
+        } & {
+            (payload?: undefined): import("redux").Action<string> & {
+                payload: undefined;
+            };
+            <PT extends unknown>(payload?: PT): import("redux").Action<string> & {
+                payload: PT;
+            };
+        });
     }>;
     register: import("redux").Reducer<union<S, returnTypes<G & getters<S>>>, import("redux").AnyAction>;
     commit: omitFirstParameters<M>;
