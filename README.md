@@ -107,6 +107,60 @@ Unlike Redux you can mutate the state like Vuex
 #### Actions
 These are just functions that can dispatch mutations at any time to handle async tasks like fetching an API.
 
+## Store
+```js
+configureStore({
+  slices: combineSlices({}),
+  middleware: [middleware()],
+  devTools: false
+})
+```
+### slices
+The combined Slices or state, getters, mutations, and actions.
+
+### middleware
+An Array of middleware functions that fire after each action.
+
+### devTools
+
+This is a boolean value to enable the [Redux devtools](https://github.com/zalmoxisus/redux-devtools-extension).
+
+
+## Midddleware
+
+Events that will trigger after each action and be given the Redux action signature.
+
+### Example
+
+```js
+// middleware/log file
+import { logAction } from 'logSlice';
+import { middleware } from 'RedVue';
+
+export const logMiddleware = middleware((action) => {
+  // So it won't trigger itself
+  if (action.type !== 'log/insertLog') {
+    // Log the Action
+    logAction.commit.insertLog({
+        timestamp: new Date(),
+        action: action.type,
+        payload: action.payload
+    })
+  }
+})
+```
+
+Registering the middleware
+```js
+// Store file
+import {log} from 'middleware/log'
+
+configureStore({
+  slices: combineSlices({}),
+  middleware: [log],
+  devTools: false
+})
+```
 # Repo
 
 # Examples

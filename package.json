@@ -1,13 +1,16 @@
 {
   "name": "redvue",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "description": "State management made easy",
   "main": "./dist/RedVue.js",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/MichaelJGW/RedVue"
+  },
   "devDependencies": {
     "@types/jest": "^24.0.18",
     "@types/node": "^12.7.5",
     "jest": "^24.9.0",
-    "npx": "^10.2.0",
     "ts-jest": "^24.1.0",
     "ts-loader": "^6.0.4",
     "ts-node": "^8.3.0",
@@ -18,7 +21,7 @@
     "webpack-cli": "^3.3.8"
   },
   "scripts": {
-    "test": "npx jest",
+    "test": "jest",
     "start": "npm run full",
     "compile": "webpack",
     "full": "ts-node -r tsconfig-paths/register ./examples/fullExample/index.ts",
@@ -28,6 +31,6 @@
   "author": "Michael Warner",
   "license": "MIT",
   "dependencies": {
-    "redux-starter-kit": "^0.7.0"
+    "@reduxjs/toolkit": "^1.0.4"
   }
 }

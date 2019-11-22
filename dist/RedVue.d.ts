@@ -1,4 +1,4 @@
-import { createSelector, combineReducers } from 'redux-starter-kit';
+import { createSelector, combineReducers } from '@reduxjs/toolkit';
 declare type union<T, U> = T & U;
 declare type omitFirstParameter<T> = T extends (...args: infer A) => any ? (payload?: A[1]) => any : never;
 declare type omitFirstParameters<T> = {
@@ -31,26 +31,9 @@ declare type middlewareAction = {
     payload: any;
 };
 declare type middlewareFunction = (action: middlewareAction) => void;
-export declare function configureStore(config: any): import("redux-starter-kit").EnhancedStore<any, import("redux").AnyAction>;
+export declare function configureStore(config: any): import("@reduxjs/toolkit").EnhancedStore<any, import("redux").AnyAction>;
 export declare function createSlice<S, G, M, A>(options: creatSliceOptions<S, G, M, A>): {
-    slice: import("redux-starter-kit").Slice<union<S, returnTypes<G & getters<S>>>, {
-        [x: string]: ({
-            type: string;
-        } & (() => import("redux").Action<string> & {
-            payload: undefined;
-        })) | ({
-            type: string;
-        } & void) | ({
-            type: string;
-        } & {
-            (payload?: undefined): import("redux").Action<string> & {
-                payload: undefined;
-            };
-            <PT extends unknown>(payload?: PT): import("redux").Action<string> & {
-                payload: PT;
-            };
-        });
-    }>;
+    slice: import("@reduxjs/toolkit").Slice<union<S, returnTypes<G & getters<S>>>, any>;
     register: import("redux").Reducer<union<S, returnTypes<G & getters<S>>>, import("redux").AnyAction>;
     commit: omitFirstParameters<M>;
     action: A;

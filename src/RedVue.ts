@@ -1,4 +1,4 @@
-import { configureStore as configureReduxStore, createSelector, createSlice as createReduxSlice, combineReducers } from 'redux-starter-kit'
+import { configureStore as configureReduxStore, createSelector, createSlice as createReduxSlice, combineReducers } from '@reduxjs/toolkit'
 
 // Util Types
 type union<T, U> = T & U
@@ -68,9 +68,9 @@ export function createSlice <S, G, M, A>(options:creatSliceOptions<S, G, M, A>) 
   
   // Register
   const slice = createReduxSlice({
-    slice: options.name,
+    name: options.name,
     initialState: updateGetters(options.state, options.getters) as union<S, returnTypes<typeof options.getters>>,
-    reducers: <any> reducers,
+    reducers: <any> reducers
   })
 
   // after register
