@@ -132,6 +132,7 @@ Events that will trigger after each action and be given the Redux action signatu
 
 ### Example
 
+#### Creation
 ```js
 // middleware/log file
 import { logAction } from 'logSlice';
@@ -150,7 +151,7 @@ export const logMiddleware = middleware((action) => {
 })
 ```
 
-Registering the middleware
+####Registering
 ```js
 // Store file
 import {log} from 'middleware/log'
