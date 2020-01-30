@@ -1,5 +1,5 @@
 # RedVue
-RedVue is a state management system that is easy to use, setup, and supports TypeScript out of the box.
+RedVue is Redux in a Style inspired by Vuex.
 
 ## Quick Start
 
@@ -8,54 +8,36 @@ npm i redvue
 ```
 
 ```js
-const RedVue = require('RedVue')
+import { createSlice, store, initStore} from 'redvue'
+
 // Setup Slices
-const counter = RedVue.createSlice ({
+const counter = createSlice ({
     name: 'counter',
     state: { count: 0 },
-    mutations: { addOne: (state) => state.count += 1 }
+    getters: { double: state => state.count * 2 },
+    mutations: { addOne: state => state.count += 1 }
 })
-// Slices
-const slices = RedVue.combineSlices({
-  counter: counter.register
+
+// Define App State Structure 
+interface AppState {
+    counter: typeof counter['IState']
+}
+
+// Initialize Store
+initStore()
+
+// Getting State
+store.subscribe(() => {
+    const state = store.getState() as AppState
+    console.log(state)
 })
-// Setup Store
-const store = RedVue.configureStore({ slices })
-// Usage
-console.log(store.getState()) // { counter: { count: 0 } }
+
+// Committing a Change to State
 counter.commit.addOne()
-console.log(store.getState()) // { counter: { count: 1 } }
+
+
+//Outputs --> { counter: { count: 1 } }
 ```
-
-## About
-
-I have found favor in Vuex however it is limited to Vue applications. I also like Redux as you can take it anywhere. RedVue is a mixture of the two Red~~ux~~ & Vue~~x~~ `RedVue`. It is based on Vuex with the guts of Redux.
-
-## TypeScript Support
-
-### Types are supported out of the box.
-#### Mutations
-Mutations already know the state by default.
-
-![State Type Checking](https://i.ibb.co/3mF5xZV/Screen-Shot-2019-09-16-at-11-43-30-AM.png)
-#### Mutation Payloads
-If you add a type to a payload. It will automatically pass the type to the execution of the mutations.
-
-<B>This also works with actions!!!</B>
-
-![Mutation Type Setup](https://i.ibb.co/bNXhzSK/Screen-Shot-2019-09-16-at-11-44-59-AM.png)
-![Mutation Usage](https://i.ibb.co/w74BCJW/Screen-Shot-2019-09-16-at-11-44-50-AM.png)
-
-#### State and Getters
-When getting State outside of the slice the getters will automatically be added to the state object returned.
-`This is the only type checking where you will need to add code that is not directly related to your own. you will need to add the following where slices is the returned value of combineSlices.`
-```ts
-type rootState = ReturnType<typeof slices>
-```
-
-![getters setup](https://i.ibb.co/Qcvr9Vc/Screen-Shot-2019-09-16-at-1-36-07-PM.png)
-![state typed](https://i.ibb.co/t292Q3M/Screen-Shot-2019-09-16-at-1-37-10-PM.png)
-
 
 # API
 ## Slice
@@ -110,24 +92,19 @@ These are just functions that can dispatch mutations at any time to handle async
 ## Store
 ```js
 configureStore({
-  slices: combineSlices({}),
   middleware: [middleware()],
   devTools: false
 })
 ```
-### slices
-The combined Slices or state, getters, mutations, and actions.
 
 ### middleware
 An Array of middleware functions that fire after each action.
 
 ### devTools
-
 This is a boolean value to enable the [Redux devtools](https://github.com/zalmoxisus/redux-devtools-extension).
 
 
-## Midddleware
-
+## Middleware
 Events that will trigger after each action and be given the Redux action signature.
 
 ### Example
@@ -157,7 +134,6 @@ export const logMiddleware = middleware((action) => {
 import {log} from 'middleware/log'
 
 configureStore({
-  slices: combineSlices({}),
   middleware: [log],
   devTools: false
 })
@@ -166,17 +142,13 @@ configureStore({
 
 # Examples
 
-In the Repo we have a Simple and a Full Example
+In the Repo we have a Examples in the examples folder check them out.
 
-The Full Example has multiple slices, tests, middleware and so much more.
-
-Take a look at the code and see if it would work for your next project.
-
-# Setup and Run the Repo
+# Build Setup and Run the Repo
 ```bash
 npm i
 npm run start
 ```
 
-# Blog post
-https://medium.com/@michaeljwarner9/redux-written-like-vuex-b5ad606aa0a7
+# Feedback
+PLEASE!!! Leave feedback and comments I don't care if you say it sucks just let me know what you think. Thanks! 
