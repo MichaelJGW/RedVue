@@ -83,6 +83,7 @@ export function createSlice <S, G, M, A>(options:createSliceOptions<S, G, M, A>)
     [slice.name]: slice.reducer
   })
   return {
+    IState: null as union<S, returnTypes<typeof options.getters>>,
     slice,
     commit : commits as omitFirstParameters<M>,
     action : actions as A
