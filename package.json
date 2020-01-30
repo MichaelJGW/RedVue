@@ -7,7 +7,7 @@
     "type": "git",
     "url": "https://github.com/MichaelJGW/RedVue"
   },
-  "keywords": ['RedVue', 'State Management', 'Redux', 'Vuex', 'js', 'ts'],
+  "keywords": ["RedVue", "State Management", "Redux", "Vuex", "js", "ts"],
   "devDependencies": {
     "@types/jest": "^24.0.18",
     "@types/node": "^12.7.5",
