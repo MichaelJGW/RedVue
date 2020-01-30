@@ -1,12 +1,13 @@
 {
   "name": "redvue",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "description": "State management made easy",
   "main": "./dist/RedVue.js",
   "repository": {
     "type": "git",
     "url": "https://github.com/MichaelJGW/RedVue"
   },
+  "keywords": ['RedVue', 'State Management', 'Redux', 'Vuex', 'js', 'ts'],
   "devDependencies": {
     "@types/jest": "^24.0.18",
     "@types/node": "^12.7.5",
