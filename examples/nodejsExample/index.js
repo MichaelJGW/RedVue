@@ -4,15 +4,12 @@ const redvue = require ('../../dist/RedVue')
 const counter = redvue.createSlice ({
     name: 'counter',
     state: { count: 0 },
-    mutations: { addOne: (state) => state.count += 1 }
+    mutations: { addOne: state => state.count += 1 }
 })
 
 // Setup Store
-const store = redvue.configureStore({ 
-    slices: redvue.combineSlices({ counter: counter.register })
-})
+const store = redvue.initStore()
 
 // Usage
-
 counter.commit.addOne()
 console.log(store.getState())

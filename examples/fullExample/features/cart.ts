@@ -1,28 +1,30 @@
-import { createSlice } from 'RedVue'
+import { createSlice } from '../../../src/RedVue'
+import { ISlice } from "./cart.type";
 import { counter } from './counter'
 
-export const cart = createSlice ({
+export const slice: ISlice = {
   name: 'cart',
   state: {
-    counter: 0,
-    name: 'bob'
+    counter: 1
   },
   getters: {
-    double: (state):number => state.counter * 2,
-    half: (state):number => state.counter / 2,
+    double(state) {
+      return state.counter * 2
+    },
+    half(state) {
+      return state.counter / 2
+    }
   },
   mutations: {
-    changeName (state, payload:string) {
-      state.name = payload;
-    },
-    addCounter (state, payload:number) {
+    addCounter(state, payload) {
       state.counter += payload;
     }
   },
   actions: {
-    someAsyncAction (payload:number) {
+    someAsyncAction(payload) {
       setTimeout(() => cart.commit.addCounter(payload), 500)
-      counter.commit.addOne();
     }
   }
-})
+}
+
+export const cart = createSlice( slice )

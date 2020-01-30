@@ -1,4 +1,4 @@
-import {createSlice} from 'RedVue'
+import { createSlice } from '../../../src/RedVue'
 
 type log = {
     timestamp: Date,

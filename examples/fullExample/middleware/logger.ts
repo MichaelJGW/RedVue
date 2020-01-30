@@ -1,5 +1,5 @@
 import { logger as loggerAction } from './../features/logger';
-import { middleware } from 'RedVue';
+import { middleware } from '../../../src/RedVue';
 
 export const logger = middleware((action) => {
     if (action.type !== 'logger/insertLog' || false) {

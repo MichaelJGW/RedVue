@@ -1,30 +1,10 @@
 import { configureStore as configureReduxStore, createSelector, createSlice as createReduxSlice, combineReducers } from '@reduxjs/toolkit'
 
-// Util Types
-type union<T, U> = T & U
-type omitFirstParameter<T> = T extends (...args: infer A) => any ? (payload?:A[1]) => any : never
-type omitFirstParameters<T> = { [K in keyof T]: omitFirstParameter<T[K]> }
-type returnTypes<T> = T extends { [key:string]: (...args) => any} ? { [K in keyof T]: ReturnType<T[K]> } : never
-
-// RedVue Types
-type state = object
-type getters<S> = { [key:string]: (state:S) => any }
-type mutations<S> = { [key:string]: (state:S, payload:any) => void }
-type actions = { [key:string]: (payload:any) => void }
-type creatSliceOptions <S, G, M, A> = {
-  name: string
-  state: S & state
-  getters?: G & getters<S>
-  mutations: M & mutations<S>
-  actions?: A & actions
-}
-// RedVue middleware
-type middlewareAction = {
-  type: string,
-  payload: any
-}
-type middlewareFunction = (action:middlewareAction) => void;
-
+// Types
+import { omitFirstParameters, returnTypes, union } from "./types/utils";
+import { IConfigureStore } from "./types/store";
+import { createSliceOptions } from "./types/slices";
+import { middlewareAction, middlewareFunction } from "./types/middleware";
 
 // Utils
 // -----MAP-----
@@ -35,8 +15,9 @@ function map (obj:object={}, fn:Function) {
   })
   return newObj
 }
+
 // -----UPDATE GETTERS-----
-function updateGetters (state:{}, getters:any={}):{} {
+function updateGetters (state:{}, getters:object={}):{} {
   Object.keys(getters).forEach(key => state[key] = getters[key](state))
   return state
 }
@@ -45,18 +26,35 @@ function updateGetters (state:{}, getters:any={}):{} {
 // to hold onto the dispatch for auto dispatching
 let dispatch = (action:any) => {}
 
+// Export the store so for easier lazy loading.
+export let store = {} as any
+// ---REGISTERING SLICES---
+let registeredSlices = {};
+let combinedReducers = {} as any
+export function combineSlices(newReducers) {
+  registeredSlices = {
+    ...registeredSlices,
+    ...newReducers
+  }
+  const combined = combineReducers(registeredSlices)
+  if (store.replaceReducer) { // If the store has been called just replace the reducers
+    store.replaceReducer(combined)
+  }
+  combinedReducers = combined
+  return combined;
+}
+
 // -----CONFIGURE STORE-----
-export function configureStore (config) {
-  const store = configureReduxStore({
-    reducer: config.slices,
-    ...config
-  })
+export function initStore(config: IConfigureStore): ReturnType<typeof configureReduxStore> {
+  const configuration:any = {...config}
+  configuration.reducer = combinedReducers
+  store = configureReduxStore({...configuration} as any)
   dispatch = store.dispatch;
   return store
 }
 
 // -----CREATE SLICE-----
-export function createSlice <S, G, M, A>(options:creatSliceOptions<S, G, M, A>) {
+export function createSlice <S, G, M, A>(options:createSliceOptions<S, G, M, A>) {
   // before register
   // overwrite mutations into reducers
   const reducers = map(options.mutations, (reducer) => (state, payload) => {
@@ -81,14 +79,16 @@ export function createSlice <S, G, M, A>(options:creatSliceOptions<S, G, M, A>) 
   })
   // change actions to have the context
   const actions = map(options.actions, (action) => (payload) => action(payload))
+  combineSlices({
+    [slice.name]: slice.reducer
+  })
   return {
     slice,
-    register: slice.reducer,
     commit : commits as omitFirstParameters<M>,
     action : actions as A
   }
 }
-
+//  --- Middleware---
 export function middleware (fn:middlewareFunction): Function {
   return () => next => (action:middlewareAction) => {
     fn(action);
@@ -96,8 +96,7 @@ export function middleware (fn:middlewareFunction): Function {
   };
 }
 
-// -----ADDITIONAL EXPORTS-----
-// rename
-export const combineSlices = combineReducers
+
+
 // pass through
 export {createSelector}

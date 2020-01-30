@@ -1,4 +1,4 @@
-import {createSlice} from 'RedVue'
+import {createSlice} from '../../../src/RedVue'
 
 export const counter = createSlice ({
   name: 'counter',

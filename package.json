@@ -1,6 +1,6 @@
 {
   "name": "redvue",
-  "version": "1.0.5",
+  "version": "1.1.0",
   "description": "State management made easy",
   "main": "./dist/RedVue.js",
   "repository": {
@@ -23,7 +23,8 @@
   "scripts": {
     "test": "jest",
     "start": "npm run full",
-    "compile": "webpack",
+    "build": "webpack",
+    "lazy": "ts-node -r tsconfig-paths/register ./examples/lazyLoadExample/index.ts",
     "full": "ts-node -r tsconfig-paths/register ./examples/fullExample/index.ts",
     "simple": "ts-node -r tsconfig-paths/register ./examples/simpleExample/index.ts",
     "nodejs": "node ./examples/nodejsExample/index.js"
