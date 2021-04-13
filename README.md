@@ -1,14 +1,30 @@
 # RedVue
-RedVue is Redux in a Style inspired by Vuex.
+RedVue is the Redux toolkit in a Style inspired by Vuex with heavy TypeScript Support.
 
 ## Quick Start
 
+### Install Dependencies
 ```bash
-npm i redvue
+npm i redvue typescript ts-node
 ```
 
-```js
-import { createSlice, store, initStore} from 'redvue'
+### NPM Script
+Under Scripts in package.json add a `start` commond `ts-node index.ts`
+```json
+  ...
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "ts-node index.ts"
+  },
+  ...
+```
+
+### TypeScript File
+
+Add a Index.ts file with the following contents.
+
+```ts
+import { createSlice, initStore} from 'redvue'
 
 // Setup Slices
 const counter = createSlice ({
@@ -24,7 +40,7 @@ interface AppState {
 }
 
 // Initialize Store
-initStore()
+const store = initStore()
 
 // Getting State
 store.subscribe(() => {
@@ -39,36 +55,74 @@ counter.commit.addOne()
 //Outputs --> { counter: { count: 1 } }
 ```
 
-# API
+### Run It
+
+In the terminal run the npm start script
+```bash
+npm run start
+```
+
+# The Parts of Redvue
+
+Redvue is the Redux toolkit with the flavor of Vuex with heavy Typescript support.
+
+There are three major parts of the store. The Store itself, Slices of the store, and Middleware.
+
+## The Store
+
+This is where you configure the store and set if you want the Redux Devtools enabled or middleware added.
+
+```ts
+const Store = configureStore({
+  middleware: [middleware()],
+  devTools: false
+})
+```
+
+### middleware
+An Array of middleware functions that fire after each action.
+
+### devTools
+This is a boolean value to enable the [Redux devtools](https://github.com/zalmoxisus/redux-devtools-extension).
+
+
+
 ## Slice
 
-```js
+Slices are where you declare state and how you interact with the state.
 
+```ts
+
+interface product {
+    stockcode: number,
+    productname: string
+}
+// Setup Slices
 const myStore = createSlice ({
-  name: 'store', // Name of the slice
-  state: { // The initial state
-    products: [],
-    sortBy: 'price'
-  },
-  getters: { // State values that change when a mutation is fired.
-    filteredProducts (state) {
-      const key = state.sortBy
-      return state.products.sort((a,b) => a[key] - b[key])
+    name: 'store', // Name of the slice
+    state: { // The initial state
+      products: [] as product[],
+      sortBy: 'price'
+    },
+    getters: { // State values that change when a mutation is fired.
+      filteredProducts (state) {
+        const key = state.sortBy
+        return state.products.sort((a,b) => a[key] - b[key])
+      }
+    },
+    mutations: { // This is the only location changes to the state occur.
+      addProducts (state, payload:product) {
+        state.products.push(payload);
+      }
+    },
+    actions: { // This is where you can do async calls
+      getProducts () {
+        fetch('/api/getProducts/')
+        .then(res => res.json())
+        .then(products => myStore.commit.addProducts(products))
+      }
     }
-  },
-  mutations: { // This is the only location changes to the state occur.
-    addProducts (state, payload) {
-      state.products = payload;
-    }
-  },
-  actions: { // This is where you can do async calls
-    getProducts () {
-      fetch('/api/getProducts/')
-      .then(res => res.json())
-      .then(products => myStore.commit.addProducts(products))
-    }
-  }
-})
+  })
 
 ```
 
@@ -89,20 +143,6 @@ Unlike Redux you can mutate the state like Vuex
 #### Actions
 These are just functions that can dispatch mutations at any time to handle async tasks like fetching an API.
 
-## Store
-```js
-configureStore({
-  middleware: [middleware()],
-  devTools: false
-})
-```
-
-### middleware
-An Array of middleware functions that fire after each action.
-
-### devTools
-This is a boolean value to enable the [Redux devtools](https://github.com/zalmoxisus/redux-devtools-extension).
-
 
 ## Middleware
 Events that will trigger after each action and be given the Redux action signature.
@@ -110,7 +150,7 @@ Events that will trigger after each action and be given the Redux action signatu
 ### Example
 
 #### Creation
-```js
+```ts
 // middleware/log file
 import { logAction } from 'logSlice';
 import { middleware } from 'RedVue';
@@ -129,7 +169,7 @@ export const logMiddleware = middleware((action) => {
 ```
 
 ####Registering
-```js
+```ts
 // Store file
 import {log} from 'middleware/log'
 
@@ -138,6 +178,99 @@ configureStore({
   devTools: false
 })
 ```
+
+
+## TypeScript Support
+
+There are three major areas of TypeScript Support. Inside the slice, reading from the state, and interactions (actions and mutations).
+
+### Slices
+
+When you create a slice as long as you are within the function itself the getters and mutations will know the state structure automatically.
+
+```ts
+const counter = createSlice ({
+    name: 'counter',
+    state: { count: 0 },
+    getters: { double: state => state.count * 2 },
+    mutations: { addOne: state => state.count += 1 }
+})
+```
+
+### Reading the State
+
+The `createSlice` function return a IState object that you can get the state structure from. All you need to do is create a master state interface "AppState" and assign that to the output of `state.getState()` and all your state structure and getters will come along with it.
+
+```ts
+// Setup Slices
+const counter = createSlice ({
+    name: 'counter',
+    state: { count: 0 },
+    getters: { double: state => state.count * 2 },
+    mutations: { addOne: state => state.count += 1 }
+})
+ 
+// Define App State Structure 
+interface AppState {
+    counter: typeof counter['IState']
+}
+ 
+// Initialize Store
+const store = initStore()
+ 
+// Getting State
+store.subscribe(() => {
+    const state = store.getState() as AppState
+    console.log(state.counter.count, state.counter.double) // The state and getters work.
+})
+```
+
+### Interactions (Actions and Mutations)
+
+The createSlice function returns the actions and commits which is how you run the mutations. As the function already knows what you entered into the function it will type check all the inputs for you.
+
+```ts
+
+interface product {
+    stockcode: number,
+    productname: string
+}
+const myStore = createSlice ({
+    name: 'store', // Name of the slice
+    state: { // The initial state
+      products: [] as product[],
+      sortBy: 'price'
+    },
+    getters: { // State values that change when a mutation is fired.
+      filteredProducts (state) {
+        const key = state.sortBy
+        return state.products.sort((a,b) => a[key] - b[key])
+      }
+    },
+    mutations: { // This is the only location changes to the state occur.
+      addProducts (state, payload:product) {
+        state.products.push(payload);
+      }
+    },
+    actions: { // This is where you can do async calls
+      getProducts () {
+        fetch('/api/getProducts/')
+        .then(res => res.json())
+        .then(products => myStore.commit.addProducts(products))
+      }
+    }
+  })
+
+// It just works.
+myStore.action.getProducts()
+myStore.commit.addProducts(someProduct)
+```
+
+
+# Thanks
+Issues, Comments, Questions, anything just create an Issue on the repo.
+
+
 # Repo
 
 # Examples
