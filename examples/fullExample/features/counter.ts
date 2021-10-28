@@ -1,16 +1,16 @@
-import {createSlice} from '../../../src/RedVue'
+import { createSlice } from '../../../src/RedVue'
 
-export const counter = createSlice ({
-  name: 'counter',
-  state: {
-    count: 0,
-  },
-  mutations: {
-    addOne (state) {
-      state.count += 1
+export const counter = createSlice({
+    name: 'counter',
+    state: {
+        count: 0,
     },
-    set (state, payload:number) {
-      state.count = payload;
+    mutations: {
+        addOne(state) {
+            state.count += 1
+        },
+        set(state, payload: number) {
+            state.count = payload;
+        }
     }
-  }
 })
