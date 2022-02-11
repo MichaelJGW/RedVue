@@ -9,6 +9,7 @@ const counter = createSlice({
     getters: { double: state => state.count * 2 },
     mutations: { 
         addOne: state => state.count += 1,
+        add: (state, payload:number) => state.count += payload,
         resetState: (state) => Object.assign(state, initialState)
     }
 })
@@ -59,5 +60,13 @@ describe('Does a simple counter work', () => {
 
         expect(callCount).toEqual(3)
         expect(state.counter.count).toEqual(3)
+    })
+
+    it('should have the types correct', () => {
+        counter.commit.addOne()
+        let state = store.getState() as AppState
+        expect(state.counter.count + 1).toEqual(2)
+        expect(state.counter.double + 1).toEqual(3)
+        counter.commit.add(3);
     })
 });
