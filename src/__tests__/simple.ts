@@ -1,5 +1,5 @@
 
-import { createSlice, store, initStore } from '../src/RedVue'
+import { createSlice, store, initStore } from '../RedVue'
 
 const initialState = { count: 0 };
 // Setup Slices

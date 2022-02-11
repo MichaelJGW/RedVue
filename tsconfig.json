@@ -2,7 +2,8 @@
     "compilerOptions": {
         "module": "commonjs",
         "target": "es5",
-        "outDir": "./dist/",
+        "rootDir": "src",
+        "outDir": "./dist",
         "declaration": true,
         "sourceMap": true,
         "noImplicitAny": false,
@@ -19,6 +20,7 @@
     ],
     "exclude": [
         "node_modules",
-        "examples"
+        "examples",
+        "src/__tests__"
     ]
 }

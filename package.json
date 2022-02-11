@@ -31,7 +31,7 @@
   "scripts": {
     "test": "jest",
     "start": "npm run full",
-    "build": "webpack",
+    "build": "rm -Rf dist && webpack",
     "full": "ts-node -r tsconfig-paths/register ./examples/fullExample/index.ts",
     "simple": "ts-node -r tsconfig-paths/register ./examples/simpleExample/index.ts"
   },
