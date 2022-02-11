@@ -5,3 +5,4 @@ examples/
 assets/
 jest.config.js
 webpack.config.js
+__tests__
