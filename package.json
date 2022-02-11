@@ -18,28 +18,26 @@
   "devDependencies": {
     "@types/jest": "^24.0.18",
     "@types/node": "^12.7.5",
-    "jest": "^24.9.0",
-    "ts-jest": "^24.1.0",
+    "jest": "^27.5.1",
+    "ts-jest": "^27.1.3",
     "ts-loader": "^6.0.4",
     "ts-node": "^8.3.0",
     "ts-node-dev": "^1.1.8",
     "tsconfig-paths": "^3.8.0",
-    "typescript": "^3.6.2",
+    "typescript": "^3.9.10",
     "webpack": "^4.40.2",
-    "webpack-cli": "^3.3.8"
+    "webpack-cli": "^4.9.2"
   },
   "scripts": {
     "test": "jest",
     "start": "npm run full",
     "build": "webpack",
-    "lazy": "ts-node -r tsconfig-paths/register ./examples/lazyLoadExample/index.ts",
     "full": "ts-node -r tsconfig-paths/register ./examples/fullExample/index.ts",
-    "simple": "ts-node -r tsconfig-paths/register ./examples/simpleExample/index.ts",
-    "nodejs": "node ./examples/nodejsExample/index.js"
+    "simple": "ts-node -r tsconfig-paths/register ./examples/simpleExample/index.ts"
   },
   "author": "Michael Warner",
   "license": "MIT",
   "dependencies": {
-    "@reduxjs/toolkit": "^1.6.2"
+    "@reduxjs/toolkit": "^1.7.2"
   }
 }

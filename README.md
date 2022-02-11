@@ -3,25 +3,15 @@ RedVue is the Redux toolkit in a Style inspired by Vuex with heavy TypeScript Su
 
 ## Quick Start
 
-### Install Dependencies
+### Installing what you need
 ```bash
-npm i redvue typescript ts-node
-```
-
-### NPM Script
-Under Scripts in package.json add a `start` commond `ts-node index.ts`
-```json
-  ...
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "ts-node index.ts"
-  },
-  ...
+npm install -g npx
+npm install redvue ts-node
 ```
 
 ### TypeScript File
 
-Add a Index.ts file with the following contents.
+index.ts
 
 ```ts
 import { createSlice, initStore} from 'redvue'
@@ -50,16 +40,18 @@ store.subscribe(() => {
 
 // Committing a Change to State
 counter.commit.addOne()
-
-
-//Outputs --> { counter: { count: 1 } }
 ```
 
 ### Run It
 
-In the terminal run the npm start script
 ```bash
-npm run start
+npx ts-node index.ts
+```
+
+### Output
+
+```bash
+{ counter: { count: 1, double: 2 } }
 ```
 
 # The Parts of Redvue
@@ -84,7 +76,6 @@ An Array of middleware functions that fire after each action.
 
 ### devTools
 This is a boolean value to enable the [Redux devtools](https://github.com/zalmoxisus/redux-devtools-extension).
-
 
 
 ## Slice
@@ -168,7 +159,7 @@ export const logMiddleware = middleware((action) => {
 })
 ```
 
-####Registering
+#### Registering
 ```ts
 // Store file
 import {log} from 'middleware/log'
@@ -188,100 +179,20 @@ There are three major areas of TypeScript Support. Inside the slice, reading fro
 
 When you create a slice as long as you are within the function itself the getters and mutations will know the state structure automatically.
 
-```ts
-const counter = createSlice ({
-    name: 'counter',
-    state: { count: 0 },
-    getters: { double: state => state.count * 2 },
-    mutations: { addOne: state => state.count += 1 }
-})
-```
+![Alt Text](./assets/slice.png)
 
 ### Reading the State
 
 The `createSlice` function return a IState object that you can get the state structure from. All you need to do is create a master state interface "AppState" and assign that to the output of `state.getState()` and all your state structure and getters will come along with it.
 
-```ts
-// Setup Slices
-const counter = createSlice ({
-    name: 'counter',
-    state: { count: 0 },
-    getters: { double: state => state.count * 2 },
-    mutations: { addOne: state => state.count += 1 }
-})
- 
-// Define App State Structure 
-interface AppState {
-    counter: typeof counter['IState']
-}
- 
-// Initialize Store
-const store = initStore()
- 
-// Getting State
-store.subscribe(() => {
-    const state = store.getState() as AppState
-    console.log(state.counter.count, state.counter.double) // The state and getters work.
-})
-```
+![Alt Text](./assets/state.gif)
 
 ### Interactions (Actions and Mutations)
 
 The createSlice function returns the actions and commits which is how you run the mutations. As the function already knows what you entered into the function it will type check all the inputs for you.
 
-```ts
-
-interface product {
-    stockcode: number,
-    productname: string
-}
-const myStore = createSlice ({
-    name: 'store', // Name of the slice
-    state: { // The initial state
-      products: [] as product[],
-      sortBy: 'price'
-    },
-    getters: { // State values that change when a mutation is fired.
-      filteredProducts (state) {
-        const key = state.sortBy
-        return state.products.sort((a,b) => a[key] - b[key])
-      }
-    },
-    mutations: { // This is the only location changes to the state occur.
-      addProducts (state, payload:product) {
-        state.products.push(payload);
-      }
-    },
-    actions: { // This is where you can do async calls
-      getProducts () {
-        fetch('/api/getProducts/')
-        .then(res => res.json())
-        .then(products => myStore.commit.addProducts(products))
-      }
-    }
-  })
-
-// It just works.
-myStore.action.getProducts()
-myStore.commit.addProducts(someProduct)
-```
-
-
-# Thanks
-Issues, Comments, Questions, anything just create an Issue on the repo.
-
-
-# Repo
+![Alt Text](./assets/mutations.gif)
 
 # Examples
 
 In the Repo we have a Examples in the examples folder check them out.
-
-# Build Setup and Run the Repo
-```bash
-npm i
-npm run start
-```
-
-# Feedback
-PLEASE!!! Leave feedback and comments I don't care if you say it sucks just let me know what you think. Thanks! 
